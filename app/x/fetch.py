@@ -1,4 +1,4 @@
-from app.x.client import XClient
+from x.client import XClient
 from logger import setup_logger
 
 logger = setup_logger()
