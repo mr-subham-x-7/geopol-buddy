@@ -2,7 +2,7 @@ import os
 
 from twscrape import API
 
-from logger import get_logger
+from logger import setup_logger
 
 logger = setup_logger()
 
