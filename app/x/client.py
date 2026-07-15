@@ -2,9 +2,9 @@ import os
 
 from twscrape import API
 
-from app.logger.logger import get_logger
+from app logger import get_logger
 
-logger = get_logger(__name__)
+logger = setup_logger()
 
 
 class XClient:
