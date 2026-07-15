@@ -25,17 +25,7 @@ class XClient:
 
         await self.api.pool.login_all()
 
-        accounts = await self.api.pool.accounts()
-
-        active_accounts = [
-            account for account in accounts
-            if account.active
-        ]
-
-        if not active_accounts:
-            raise Exception("❌ X login failed. No active twscrape accounts.")
-
-        logger.info("✅ Successfully logged into X")
+        logger.info("✅ X login process completed")
 
     def get_api(self):
         return self.api
