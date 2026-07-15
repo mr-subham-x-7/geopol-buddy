@@ -1,5 +1,6 @@
 from logger import setup_logger
 from config import check_secrets
+from gemini import test_connection
 
 logger = setup_logger()
 
@@ -16,8 +17,15 @@ def main():
         return
 
     logger.info("✅ All GitHub Secrets verified.")
-    logger.info("🤖 Ready for API integrations.")
-    logger.info("🎉 Foundation completed successfully!")
+
+    logger.info("🤖 Testing Gemini connection...")
+
+    reply = test_connection()
+
+    logger.info("Gemini replied:")
+    logger.info(reply)
+
+    logger.info("🎉 Gemini integration successful!")
 
 
 if __name__ == "__main__":
