@@ -1,4 +1,4 @@
-from logger import setup_logger
+ from logger import setup_logger
 from config import check_secrets
 
 logger = setup_logger()
@@ -15,8 +15,9 @@ def main():
             logger.error(f"   - {secret}")
         return
 
-    logger.info("✅ All required secrets found.")
-    logger.info("🎉 Ready for next milestone.")
+    logger.info("✅ All GitHub Secrets verified.")
+    logger.info("🤖 Ready for API integrations.")
+    logger.info("🎉 Foundation completed successfully!")
 
 
 if __name__ == "__main__":
