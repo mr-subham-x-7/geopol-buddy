@@ -1,4 +1,4 @@
- from logger import setup_logger
+from logger import setup_logger
 from config import check_secrets
 
 logger = setup_logger()
