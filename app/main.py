@@ -5,6 +5,7 @@ from config import check_secrets
 from gemini import test_connection
 from telegram_client import send_test_message
 from x.client import XClient
+from x.fetch import TweetFetcher
 
 logger = setup_logger()
 
@@ -47,6 +48,21 @@ async def main():
     await x_client.login()
 
     logger.info("✅ X authentication successful!")
+
+    # Test X Tweet Fetching
+    logger.info("📰 Fetching tweets from X...")
+
+    fetcher = TweetFetcher()
+
+    tweets = await fetcher.fetch_user_tweets(
+        username="Reuters",
+        limit=5
+    )
+
+    for tweet in tweets:
+        logger.info(tweet.rawContent)
+
+    logger.info("✅ Tweet fetching successful!")
 
     logger.info("🎉 Geopol Buddy completed successfully!")
 
