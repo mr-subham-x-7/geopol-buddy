@@ -1,7 +1,6 @@
 import os
 
 from twscrape import API
-
 from logger import setup_logger
 
 logger = setup_logger()
@@ -24,19 +23,19 @@ class XClient:
             email_password=password,
         )
 
-await self.api.pool.login_all()
+        await self.api.pool.login_all()
 
-accounts = await self.api.pool.accounts()
+        accounts = await self.api.pool.accounts()
 
-active_accounts = [
-    account for account in accounts
-    if account.active
-]
+        active_accounts = [
+            account for account in accounts
+            if account.active
+        ]
 
-if not active_accounts:
-    raise Exception("❌ X login failed. No active twscrape accounts.")
+        if not active_accounts:
+            raise Exception("❌ X login failed. No active twscrape accounts.")
 
-logger.info("✅ Successfully logged into X")
+        logger.info("✅ Successfully logged into X")
 
     def get_api(self):
         return self.api
