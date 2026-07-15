@@ -52,7 +52,7 @@ async def main():
     # Test X Tweet Fetching
     logger.info("📰 Fetching tweets from X...")
 
-    fetcher = TweetFetcher()
+    fetcher = TweetFetcher(x_client)
 
     tweets = await fetcher.fetch_user_tweets(
         username="Reuters",
