@@ -3,11 +3,10 @@ from config import GEMINI_API_KEY
 
 client = genai.Client(api_key=GEMINI_API_KEY)
 
-
 def test_connection():
-    response = client.models.generate_content(
-        model="gemini-2.5-pro",
-        contents="Reply with exactly: Geopol Buddy connected successfully!"
-    )
+    print("Available models:\n")
 
-    return response.text
+    for model in client.models.list():
+        print(model.name)
+
+    return "Model listing completed."
