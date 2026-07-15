@@ -4,11 +4,12 @@ from logger import setup_logger
 from config import check_secrets
 from gemini import test_connection
 from telegram_client import send_test_message
+from x.client import XClient
 
 logger = setup_logger()
 
 
-def main():
+async def main():
     logger.info("🚀 Geopol Buddy starting...")
 
     # Check GitHub Secrets
@@ -35,12 +36,20 @@ def main():
     # Test Telegram
     logger.info("📨 Sending Telegram test message...")
 
-    asyncio.run(send_test_message())
+    await send_test_message()
 
     logger.info("✅ Telegram message sent successfully!")
+
+    # Test X Login
+    logger.info("🐦 Testing X authentication...")
+
+    x_client = XClient()
+    await x_client.login()
+
+    logger.info("✅ X authentication successful!")
 
     logger.info("🎉 Geopol Buddy completed successfully!")
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
