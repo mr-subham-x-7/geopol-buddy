@@ -5,7 +5,7 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 
 def test_connection():
     response = client.models.generate_content(
-        model="gemini-3.5-flash",
+        model="gemini-3.1-flash-lite",
         contents="Reply with exactly: Geopol Buddy connected successfully!"
     )
     return response.text
