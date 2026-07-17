@@ -1,3 +1,4 @@
 google-genai
 python-telegram-bot
 twscrape==0.17.0
+feedparser
