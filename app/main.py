@@ -4,8 +4,7 @@ from logger import setup_logger
 from config import check_secrets
 from gemini import test_connection
 from telegram_client import send_test_message
-from x.client import XClient
-from x.fetch import TweetFetcher
+from collectors.rss import RSSCollector
 
 logger = setup_logger()
 
@@ -41,28 +40,23 @@ async def main():
 
     logger.info("✅ Telegram message sent successfully!")
 
-    # Test X Login
-    logger.info("🐦 Testing X authentication...")
+    # Test RSS Collection
+    logger.info("📰 Testing RSS collector...")
 
-    x_client = XClient()
-    await x_client.login()
+    rss = RSSCollector()
 
-    logger.info("✅ X authentication successful!")
+    raw_data = rss.fetch()
 
-    # Test X Tweet Fetching
-    logger.info("📰 Fetching tweets from X...")
+    articles = rss.parse(raw_data)
 
-    fetcher = TweetFetcher(x_client)
+    logger.info(f"✅ Collected {len(articles)} articles.")
 
-    tweets = await fetcher.fetch_user_tweets(
-        username="Reuters",
-        limit=5
-    )
+    logger.info("Latest headlines:")
 
-    for tweet in tweets:
-        logger.info(tweet.rawContent)
+    for article in articles:
+        logger.info(article["title"])
 
-    logger.info("✅ Tweet fetching successful!")
+    logger.info("✅ RSS collection successful!")
 
     logger.info("🎉 Geopol Buddy completed successfully!")
 
