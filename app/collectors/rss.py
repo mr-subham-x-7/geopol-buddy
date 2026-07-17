@@ -1,3 +1,5 @@
+import feedparser
+
 from .base import BaseCollector
 
 
