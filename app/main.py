@@ -66,4 +66,39 @@ async def main():
     logger.info(f"✅ Collected {len(articles)} articles.")
     logger.info(f"🆕 New articles: {len(new_articles)}")
 
-    logger.info("
+    logger.info("Latest new headlines:")
+
+    for article in new_articles:
+        logger.info(article["title"])
+
+    # Generate AI summary for the first new article
+    if new_articles:
+        logger.info("🧠 Generating AI summary...")
+
+        summary = summarizer.summarize(new_articles[0])
+
+        logger.info("AI Summary:")
+        logger.info(summary)
+
+        message = f"""📰 {new_articles[0]["title"]}
+
+🧠 AI Summary
+
+{summary}
+
+🔗 {new_articles[0]["link"]}
+"""
+
+        logger.info("📨 Sending intelligence report to Telegram...")
+
+        await send_message(message)
+
+        logger.info("✅ Intelligence report sent!")
+
+    logger.info("✅ RSS collection successful!")
+
+    logger.info("🎉 Geopol Buddy completed successfully!")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
