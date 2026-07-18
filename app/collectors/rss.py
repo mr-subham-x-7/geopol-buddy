@@ -7,26 +7,26 @@ from .base import BaseCollector
 class RSSCollector(BaseCollector):
     """Collector for RSS news feeds."""
 
-def fetch(self):
-    """Fetch RSS data."""
+    def fetch(self):
+        """Fetch RSS data."""
 
-    feeds = []
+        feeds = []
 
-    for source in RSS_FEEDS:
-        print(f"\n===== {source['name']} =====")
+        for source in RSS_FEEDS:
+            print(f"\n===== {source['name']} =====")
 
-        feed = feedparser.parse(source["url"])
+            feed = feedparser.parse(source["url"])
 
-        print("Feed title:", feed.feed.get("title", "No title"))
-        print("Number of entries:", len(feed.entries))
-        print("Bozo:", feed.bozo)
+            print("Feed title:", feed.feed.get("title", "No title"))
+            print("Number of entries:", len(feed.entries))
+            print("Bozo:", feed.bozo)
 
-        if feed.bozo:
-            print("Exception:", feed.bozo_exception)
+            if feed.bozo:
+                print("Exception:", feed.bozo_exception)
 
-        feeds.append(feed)
+            feeds.append(feed)
 
-    return feeds
+        return feeds
 
     def parse(self, raw_data):
         """Parse RSS data into a list of articles."""
