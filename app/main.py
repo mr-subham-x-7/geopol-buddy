@@ -5,6 +5,7 @@ from config import check_secrets
 from intelligence.summarizer import Summarizer
 from intelligence.filter import NewsFilter
 from intelligence.priority import PriorityFilter
+from intelligence.clustering import EventCluster
 from telegram_client import send_test_message, send_message
 from collectors.rss import RSSCollector
 from storage.storage import Storage
@@ -52,12 +53,21 @@ async def main():
     rss = RSSCollector()
     storage = Storage()
     filterer = NewsFilter()
+    clusterer = EventCluster()
 
     raw_data = rss.fetch()
     articles = rss.parse(raw_data)
 
     # Remove duplicate headlines
     articles = filterer.remove_duplicates(articles)
+
+    # Group related articles
+    clusters = clusterer.cluster(articles)
+
+    logger.info("📁 Event clusters:")
+
+    for name, items in clusters.items():
+        logger.info(f"{name}: {len(items)} article(s)")
 
     processed = storage.load()
 
