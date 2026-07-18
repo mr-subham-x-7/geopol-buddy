@@ -5,6 +5,7 @@ from config import check_secrets
 from gemini import test_connection
 from telegram_client import send_test_message
 from collectors.rss import RSSCollector
+from storage.storage import Storage
 
 logger = setup_logger()
 
@@ -44,16 +45,28 @@ async def main():
     logger.info("📰 Testing RSS collector...")
 
     rss = RSSCollector()
+    storage = Storage()
 
     raw_data = rss.fetch()
-
     articles = rss.parse(raw_data)
 
-    logger.info(f"✅ Collected {len(articles)} articles.")
+    processed = storage.load()
 
-    logger.info("Latest headlines:")
+    new_articles = []
 
     for article in articles:
+        if article["link"] not in processed:
+            new_articles.append(article)
+            processed.append(article["link"])
+
+    storage.save(processed)
+
+    logger.info(f"✅ Collected {len(articles)} articles.")
+    logger.info(f"🆕 New articles: {len(new_articles)}")
+
+    logger.info("Latest new headlines:")
+
+    for article in new_articles:
         logger.info(article["title"])
 
     logger.info("✅ RSS collection successful!")
