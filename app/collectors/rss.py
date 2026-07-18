@@ -13,17 +13,7 @@ class RSSCollector(BaseCollector):
         feeds = []
 
         for source in RSS_FEEDS:
-            print(f"\n===== {source['name']} =====")
-
             feed = feedparser.parse(source["url"])
-
-            print("Feed title:", feed.feed.get("title", "No title"))
-            print("Number of entries:", len(feed.entries))
-            print("Bozo:", feed.bozo)
-
-            if feed.bozo:
-                print("Exception:", feed.bozo_exception)
-
             feeds.append(feed)
 
         return feeds
