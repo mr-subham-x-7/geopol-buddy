@@ -97,13 +97,17 @@ async def main():
 
         for index, article in enumerate(top_articles, start=1):
 
-            logger.info(f"⭐ Priority {index}: {article['title']}")
+            logger.info(
+                f"⭐ Priority {index} | Score: {article['score']} | {article['title']}"
+            )
 
             summary = summarizer.summarize(article)
 
             logger.info(summary)
 
-            brief += f"""⭐ {index}. {article["title"]}
+            brief += f"""⭐ Priority {index} (Score: {article["score"]})
+
+📰 {article["title"]}
 
 🌍 Source: {article["source"]}
 
@@ -129,4 +133,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+   
