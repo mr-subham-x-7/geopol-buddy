@@ -6,9 +6,12 @@ from .base import BaseCollector
 class RSSCollector(BaseCollector):
     """Collector for RSS news feeds."""
 
-    RSS_FEEDS = [
-        "https://feeds.reuters.com/Reuters/worldNews",
-    ]
+RSS_FEEDS = [
+    {
+        "name": "Reuters World",
+        "url": "https://feeds.reuters.com/Reuters/worldNews",
+    },
+]
 
     def fetch(self):
         """Fetch RSS data."""
