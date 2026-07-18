@@ -4,6 +4,7 @@ from logger import setup_logger
 from config import check_secrets
 from intelligence.summarizer import Summarizer
 from intelligence.filter import NewsFilter
+from intelligence.priority import PriorityFilter
 from telegram_client import send_test_message, send_message
 from collectors.rss import RSSCollector
 from storage.storage import Storage
@@ -29,6 +30,7 @@ async def main():
     logger.info("🧠 Testing Intelligence Layer...")
 
     summarizer = Summarizer()
+    priority = PriorityFilter()
 
     reply = summarizer.test()
 
@@ -76,22 +78,29 @@ async def main():
     for article in new_articles:
         logger.info(article["title"])
 
-    # Generate AI summary for the first new article
+    # Select the highest priority article
     if new_articles:
+        top_article = priority.select(new_articles)
+
+        logger.info("⭐ Highest priority article:")
+        logger.info(top_article["title"])
+
         logger.info("🧠 Generating AI summary...")
 
-        summary = summarizer.summarize(new_articles[0])
+        summary = summarizer.summarize(top_article)
 
         logger.info("AI Summary:")
         logger.info(summary)
 
-        message = f"""📰 {new_articles[0]["title"]}
+        message = f"""⭐ HIGH PRIORITY NEWS
+
+📰 {top_article["title"]}
 
 🧠 AI Summary
 
 {summary}
 
-🔗 {new_articles[0]["link"]}
+🔗 {top_article["link"]}
 """
 
         logger.info("📨 Sending intelligence report to Telegram...")
