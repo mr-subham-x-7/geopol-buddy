@@ -88,34 +88,32 @@ async def main():
     for article in new_articles:
         logger.info(article["title"])
 
-    # Select the highest priority article
+    # Generate intelligence brief for the Top 3 articles
     if new_articles:
-        top_article = priority.select(new_articles)
 
-        logger.info("⭐ Highest priority article:")
-        logger.info(top_article["title"])
+        top_articles = priority.select_top(new_articles)
 
-        logger.info("🧠 Generating AI summary...")
+        brief = "🛰️ GEOPOL BUDDY INTELLIGENCE BRIEF\n\n"
 
-        summary = summarizer.summarize(top_article)
+        for index, article in enumerate(top_articles, start=1):
 
-        logger.info("AI Summary:")
-        logger.info(summary)
+            logger.info(f"⭐ Priority {index}: {article['title']}")
 
-        message = f"""⭐ HIGH PRIORITY NEWS
+            summary = summarizer.summarize(article)
 
-📰 {top_article["title"]}
+            logger.info(summary)
 
-🧠 AI Summary
+            brief += f"""{index}. 📰 {article["title"]}
 
-{summary}
+🧠 {summary}
 
-🔗 {top_article["link"]}
+🔗 {article["link"]}
+
 """
 
         logger.info("📨 Sending intelligence report to Telegram...")
 
-        await send_message(message)
+        await send_message(brief)
 
         logger.info("✅ Intelligence report sent!")
 
