@@ -3,7 +3,7 @@ import asyncio
 from logger import setup_logger
 from config import check_secrets
 from intelligence.summarizer import Summarizer
-from telegram_client import send_test_message
+from telegram_client import send_test_message, send_message
 from collectors.rss import RSSCollector
 from storage.storage import Storage
 
@@ -66,24 +66,4 @@ async def main():
     logger.info(f"✅ Collected {len(articles)} articles.")
     logger.info(f"🆕 New articles: {len(new_articles)}")
 
-    logger.info("Latest new headlines:")
-
-    for article in new_articles:
-        logger.info(article["title"])
-
-    # Generate AI summary for the first new article
-    if new_articles:
-        logger.info("🧠 Generating AI summary...")
-
-        summary = summarizer.summarize(new_articles[0])
-
-        logger.info("AI Summary:")
-        logger.info(summary)
-
-    logger.info("✅ RSS collection successful!")
-
-    logger.info("🎉 Geopol Buddy completed successfully!")
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
+    logger.info("
