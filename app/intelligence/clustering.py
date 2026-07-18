@@ -1,18 +1,49 @@
 class EventCluster:
-    """Groups related news articles."""
+    """Groups related geopolitical news."""
+
+    KEYWORDS = [
+        "china",
+        "taiwan",
+        "india",
+        "pakistan",
+        "russia",
+        "ukraine",
+        "usa",
+        "us",
+        "america",
+        "israel",
+        "iran",
+        "thailand",
+        "indonesia",
+        "vietnam",
+        "nato",
+        "japan",
+        "north korea",
+        "south korea",
+        "philippines",
+        "myanmar",
+        "bangladesh",
+        "nepal",
+        "bhutan",
+        "sri lanka",
+        "afghanistan",
+        "yemen",
+        "eu",
+        "un",
+    ]
 
     def cluster(self, articles):
-        """Group articles by the first word of the title."""
-
         groups = {}
 
         for article in articles:
-            title = article["title"].split()
+            title = article["title"].lower()
 
-            if not title:
-                continue
+            key = "other"
 
-            key = title[0].lower()
+            for keyword in self.KEYWORDS:
+                if keyword in title:
+                    key = keyword
+                    break
 
             groups.setdefault(key, []).append(article)
 
