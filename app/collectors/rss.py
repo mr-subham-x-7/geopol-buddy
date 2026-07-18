@@ -24,8 +24,11 @@ class RSSCollector(BaseCollector):
         articles = []
 
         for feed in raw_data:
+            source = feed.feed.get("title", "Unknown Source")
+
             for entry in feed.entries:
                 article = {
+                    "source": source,
                     "title": entry.get("title", ""),
                     "link": entry.get("link", ""),
                     "published": entry.get("published", ""),
@@ -33,5 +36,10 @@ class RSSCollector(BaseCollector):
                 }
 
                 articles.append(article)
+
+        articles.sort(
+            key=lambda article: article.get("published", ""),
+            reverse=True,
+        )
 
         return articles
