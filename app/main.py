@@ -103,11 +103,17 @@ async def main():
 
             logger.info(summary)
 
-            brief += f"""{index}. 📰 {article["title"]}
+            brief += f"""⭐ {index}. {article["title"]}
 
-🧠 {summary}
+🌍 Source: {article["source"]}
+
+🧠 Intelligence Analysis
+
+{summary}
 
 🔗 {article["link"]}
+
+────────────────────
 
 """
 
