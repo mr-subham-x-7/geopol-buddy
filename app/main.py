@@ -3,6 +3,7 @@ import asyncio
 from logger import setup_logger
 from config import check_secrets
 from intelligence.summarizer import Summarizer
+from intelligence.filter import NewsFilter
 from telegram_client import send_test_message, send_message
 from collectors.rss import RSSCollector
 from storage.storage import Storage
@@ -48,9 +49,13 @@ async def main():
 
     rss = RSSCollector()
     storage = Storage()
+    filterer = NewsFilter()
 
     raw_data = rss.fetch()
     articles = rss.parse(raw_data)
+
+    # Remove duplicate headlines
+    articles = filterer.remove_duplicates(articles)
 
     processed = storage.load()
 
