@@ -2,7 +2,7 @@ import asyncio
 
 from logger import setup_logger
 from config import check_secrets
-from gemini import test_connection
+from intelligence.summarizer import Summarizer
 from telegram_client import send_test_message
 from collectors.rss import RSSCollector
 from storage.storage import Storage
@@ -24,15 +24,17 @@ async def main():
 
     logger.info("✅ All GitHub Secrets verified.")
 
-    # Test Gemini
-    logger.info("🤖 Testing Gemini connection...")
+    # Test Intelligence Layer
+    logger.info("🧠 Testing Intelligence Layer...")
 
-    reply = test_connection()
+    summarizer = Summarizer()
+
+    reply = summarizer.test()
 
     logger.info("Gemini replied:")
     logger.info(reply)
 
-    logger.info("🎉 Gemini integration successful!")
+    logger.info("🎉 Intelligence Layer is working!")
 
     # Test Telegram
     logger.info("📨 Sending Telegram test message...")
