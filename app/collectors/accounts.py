@@ -1,6 +1,6 @@
 RSS_FEEDS = [
     {
-        "name": "Reuters World",
-        "url": "https://feeds.reuters.com/Reuters/worldNews",
+        "name": "BBC World",
+        "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
     },
 ]
