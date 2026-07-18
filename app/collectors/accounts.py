@@ -15,4 +15,11 @@ RSS_FEEDS = [
         "name": "BBC US & Canada",
         "url": "https://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml",
     },
+           "name": "BBC China",
+        "url": "https://feeds.bbci.co.uk/news/world/asia/china/rss.xml",
+    },
+    {
+        "name": "BBC India",
+        "url": "https://feeds.bbci.co.uk/news/world/asia/india/rss.xml",
+    },
 ]
