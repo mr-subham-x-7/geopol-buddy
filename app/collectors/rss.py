@@ -1,25 +1,19 @@
 import feedparser
 
+from .accounts import RSS_FEEDS
 from .base import BaseCollector
 
 
 class RSSCollector(BaseCollector):
     """Collector for RSS news feeds."""
 
-RSS_FEEDS = [
-    {
-        "name": "Reuters World",
-        "url": "https://feeds.reuters.com/Reuters/worldNews",
-    },
-]
-
     def fetch(self):
         """Fetch RSS data."""
 
         feeds = []
 
-        for url in self.RSS_FEEDS:
-            feed = feedparser.parse(url)
+        for source in RSS_FEEDS:
+            feed = feedparser.parse(source["url"])
             feeds.append(feed)
 
         return feeds
