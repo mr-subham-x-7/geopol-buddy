@@ -71,6 +71,15 @@ async def main():
     for article in new_articles:
         logger.info(article["title"])
 
+    # Generate AI summary for the first new article
+    if new_articles:
+        logger.info("🧠 Generating AI summary...")
+
+        summary = summarizer.summarize(new_articles[0])
+
+        logger.info("AI Summary:")
+        logger.info(summary)
+
     logger.info("✅ RSS collection successful!")
 
     logger.info("🎉 Geopol Buddy completed successfully!")
