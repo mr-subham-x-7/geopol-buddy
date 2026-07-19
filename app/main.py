@@ -88,12 +88,10 @@ async def main():
     for article in new_articles:
         logger.info(article["title"])
 
-    # Generate intelligence brief for the Top 3 articles
+    #     # Send one intelligence report per priority article
     if new_articles:
 
         top_articles = priority.select_top(new_articles)
-
-        brief = "🛰️ GEOPOL BUDDY INTELLIGENCE BRIEF\n\n"
 
         for index, article in enumerate(top_articles, start=1):
 
@@ -105,7 +103,9 @@ async def main():
 
             logger.info(summary)
 
-            brief += f"""⭐ Priority {index} (Score: {article["score"]})
+            message = f"""🛰️ GEOPOL BUDDY INTELLIGENCE
+
+⭐ Priority {index} (Score: {article["score"]})
 
 📰 {article["title"]}
 
@@ -116,17 +116,14 @@ async def main():
 {summary}
 
 🔗 {article["link"]}
-
-────────────────────
-
 """
 
-        logger.info("📨 Sending intelligence report to Telegram...")
+            logger.info(f"📨 Sending report {index}...")
 
-        await send_message(brief)
+            await send_message(message)
 
-        logger.info("✅ Intelligence report sent!")
-
+            logger.info(f"✅ Report {index} sent!")
+            
     logger.info("✅ RSS collection successful!")
 
     logger.info("🎉 Geopol Buddy completed successfully!")
