@@ -88,42 +88,48 @@ async def main():
     for article in new_articles:
         logger.info(article["title"])
 
-    #     # Send one intelligence report per priority article
-    if new_articles:
+    # Keep only new articles inside each cluster
+    new_clusters = {}
 
-        top_articles = priority.select_top(new_articles)
+    for cluster_name, cluster_articles in clusters.items():
+        filtered = [
+            article for article in cluster_articles
+            if article in new_articles
+        ]
 
-        for index, article in enumerate(top_articles, start=1):
+        if filtered:
+            new_clusters[cluster_name] = filtered
+
+    # Send one intelligence report per event cluster
+    if new_clusters:
+
+        logger.info("🛰️ Generating intelligence reports by event...")
+
+        for cluster_name, cluster_articles in new_clusters.items():
 
             logger.info(
-                f"⭐ Priority {index} | Score: {article['score']} | {article['title']}"
+                f"📁 {cluster_name}: {len(cluster_articles)} article(s)"
             )
 
-            summary = summarizer.summarize(article)
+            summary = summarizer.summarize(cluster_articles)
 
-            logger.info(summary)
+            message = f"""🛰️ GEOPOL BUDDY
 
-            message = f"""🛰️ GEOPOL BUDDY INTELLIGENCE
+📁 Event: {cluster_name}
 
-⭐ Priority {index} (Score: {article["score"]})
+📰 Related Articles: {len(cluster_articles)}
 
-📰 {article["title"]}
-
-🌍 Source: {article["source"]}
-
-🧠 Intelligence Analysis
+🧠 Intelligence Assessment
 
 {summary}
-
-🔗 {article["link"]}
 """
 
-            logger.info(f"📨 Sending report {index}...")
+            logger.info(f"📨 Sending {cluster_name} report...")
 
             await send_message(message)
 
-            logger.info(f"✅ Report {index} sent!")
-            
+            logger.info(f"✅ {cluster_name} report sent!")
+
     logger.info("✅ RSS collection successful!")
 
     logger.info("🎉 Geopol Buddy completed successfully!")
@@ -131,4 +137,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-   
