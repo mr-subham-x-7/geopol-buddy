@@ -27,18 +27,13 @@ async def main():
 
     logger.info("✅ All GitHub Secrets verified.")
 
-    # Test Intelligence Layer
-    logger.info("🧠 Testing Intelligence Layer...")
+    # Initialize Intelligence Layer
+    logger.info("🧠 Initializing Intelligence Layer...")
 
     summarizer = Summarizer()
     priority = PriorityFilter()
 
-    reply = summarizer.test()
-
-    logger.info("Gemini replied:")
-    logger.info(reply)
-
-    logger.info("🎉 Intelligence Layer is working!")
+    logger.info("✅ Intelligence Layer initialized!")
 
     # Test Telegram
     logger.info("📨 Sending Telegram test message...")
