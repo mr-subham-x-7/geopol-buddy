@@ -112,7 +112,7 @@ async def main():
         if reports_sent >= 3:
             break
 
-        if cluster_name == "other":
+        if cluster_name == "General International News":
             continue
 
         logger.info(
@@ -121,15 +121,33 @@ async def main():
 
         summary = summarizer.summarize(cluster_articles)
 
+        logger.info(summary)
+
+        sources = sorted({
+            article["source"]
+            for article in cluster_articles
+        })
+
+        latest_time = max(
+            article.get("published", "")
+            for article in cluster_articles
+        )
+
         message = f"""🛰️ GEOPOL BUDDY INTELLIGENCE REPORT
 
 ━━━━━━━━━━━━━━━━━━━━
 
 📁 Event
-{cluster_name.title()}
+{cluster_name}
 
 📰 Related Articles
 {len(cluster_articles)}
+
+🕒 Latest Update
+{latest_time}
+
+🌍 Sources
+{", ".join(sources)}
 
 ━━━━━━━━━━━━━━━━━━━━
 
