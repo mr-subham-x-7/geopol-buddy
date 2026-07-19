@@ -15,20 +15,20 @@ class Summarizer:
 
     def summarize(self, articles):
 
-    if not isinstance(articles, list):
-        articles = [articles]
+        if not isinstance(articles, list):
+            articles = [articles]
 
-    context = ""
+        context = ""
 
-    for article in articles:
-        context += f"""
+        for article in articles:
+            context += f"""
 Title: {article['title']}
 Source: {article['source']}
 Summary: {article['summary']}
 
 """
 
-    prompt = f"""
+        prompt = f"""
 You are a geopolitical intelligence analyst.
 
 Analyze these related news reports as one event.
@@ -45,9 +45,9 @@ Produce:
 Keep it under 250 words.
 """
 
-    response = self.client.models.generate_content(
-        model="gemini-3.1-flash-lite",
-        contents=prompt,
-    )
+        response = self.client.models.generate_content(
+            model="gemini-3.1-flash-lite",
+            contents=prompt,
+        )
 
-    return response.text
+        return response.text
