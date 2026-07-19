@@ -35,36 +35,45 @@ Analyze these related news reports as one geopolitical event.
 
 {context}
 
-Return EXACTLY in this format.
+Return EXACTLY in the following format.
 
 Severity:
-(Low / Medium / High / Critical)
+Use exactly one of:
+🟢 Low
+🟡 Medium
+🟠 High
+🔴 Critical
 
 Confidence:
-(Low / Medium / High)
+Use exactly one of:
+🟢 Low
+🟡 Medium
+🔴 High
 
 Countries:
-(country names)
+List all countries involved, separated by commas.
 
 Sources:
-(source names only)
+Only list the news organizations used from the provided articles.
 
 What happened:
-(3-5 sentences)
+(3–5 concise sentences)
 
 Why it matters:
-(2-4 sentences)
+(2–4 concise sentences)
 
 Who is affected:
-(list)
+(Bullet list)
 
 Possible implications:
-(2-4 bullet points)
+(Bullet list with 2–4 points)
 
-Keep the entire response under 250 words.
-Do not use Markdown.
-Do not invent facts.
-Only use information supported by the provided articles.
+Rules:
+- Keep the entire response under 250 words.
+- Do not use Markdown.
+- Do not invent facts.
+- Only use information supported by the provided articles.
+- If information is uncertain, state that it is uncertain.
 """
 
         response = self.client.models.generate_content(
