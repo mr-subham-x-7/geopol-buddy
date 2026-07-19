@@ -28,23 +28,44 @@ Summary: {article['summary']}
 
 """
 
-        prompt = f"""
-You are a geopolitical intelligence analyst.
+prompt = f"""
+You are a senior geopolitical intelligence analyst.
 
-Analyze these related news reports as one event.
+Analyze these related news reports as one geopolitical event.
 
 {context}
 
-Produce:
+Return EXACTLY in this format.
 
-1. What happened
-2. Why it matters
-3. Who is affected
-4. Possible implications
+Severity:
+(Low / Medium / High / Critical)
 
-Keep it under 250 words.
+Confidence:
+(Low / Medium / High)
+
+Countries:
+(country names)
+
+Sources:
+(source names only)
+
+What happened:
+(3-5 sentences)
+
+Why it matters:
+(2-4 sentences)
+
+Who is affected:
+(list)
+
+Possible implications:
+(2-4 bullet points)
+
+Keep the entire response under 250 words.
+Do not use Markdown.
+Do not invent facts.
+Only use information supported by the provided articles.
 """
-
         response = self.client.models.generate_content(
             model="gemini-3.1-flash-lite",
             contents=prompt,
