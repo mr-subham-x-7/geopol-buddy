@@ -93,19 +93,34 @@ async def main():
 
     for cluster_name, cluster_articles in clusters.items():
         filtered = [
-            article for article in cluster_articles
+            article
+            for article in cluster_articles
             if article in new_articles
         ]
 
         if filtered:
             new_clusters[cluster_name] = filtered
 
-    # Send one intelligence report per event cluster
+    # Send intelligence reports for top 3 event clusters
     if new_clusters:
 
         logger.info("🛰️ Generating intelligence reports by event...")
 
-        for cluster_name, cluster_articles in new_clusters.items():
+        sorted_clusters = sorted(
+            new_clusters.items(),
+            key=lambda item: len(item[1]),
+            reverse=True,
+        )
+
+        reports_sent = 0
+
+        for cluster_name, cluster_articles in sorted_clusters:
+
+            if reports_sent >= 3:
+                break
+
+            if cluster_name == "other":
+                continue
 
             logger.info(
                 f"📁 {cluster_name}: {len(cluster_articles)} article(s)"
@@ -129,6 +144,8 @@ async def main():
             await send_message(message)
 
             logger.info(f"✅ {cluster_name} report sent!")
+
+            reports_sent += 1
 
     logger.info("✅ RSS collection successful!")
 
