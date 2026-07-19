@@ -28,7 +28,7 @@ Summary: {article['summary']}
 
 """
 
-prompt = f"""
+        prompt = f"""
 You are a senior geopolitical intelligence analyst.
 
 Analyze these related news reports as one geopolitical event.
@@ -66,6 +66,7 @@ Do not use Markdown.
 Do not invent facts.
 Only use information supported by the provided articles.
 """
+
         response = self.client.models.generate_content(
             model="gemini-3.1-flash-lite",
             contents=prompt,
