@@ -13,34 +13,41 @@ class Summarizer:
         )
         return response.text
 
-    def summarize(self, article):
-        prompt = f"""
-You are a geopolitical intelligence analyst.
+    def summarize(self, articles):
 
-Analyze this news article and respond in exactly this format:
+    if not isinstance(articles, list):
+        articles = [articles]
 
-What happened:
-- Briefly explain the event.
+    context = ""
 
-Why it matters:
-- Explain why this event is strategically important.
+    for article in articles:
+        context += f"""
+Title: {article['title']}
+Source: {article['source']}
+Summary: {article['summary']}
 
-Who is affected:
-- Mention the main countries or organizations involved.
-
-Possible implications:
-- Mention likely short-term consequences.
-
-Title:
-{article["title"]}
-
-Summary:
-{article["summary"]}
 """
 
-        response = self.client.models.generate_content(
-            model="gemini-3.1-flash-lite",
-            contents=prompt,
-        )
+    prompt = f"""
+You are a geopolitical intelligence analyst.
 
-        return response.text
+Analyze these related news reports as one event.
+
+{context}
+
+Produce:
+
+1. What happened
+2. Why it matters
+3. Who is affected
+4. Possible implications
+
+Keep it under 250 words.
+"""
+
+    response = self.client.models.generate_content(
+        model="gemini-3.1-flash-lite",
+        contents=prompt,
+    )
+
+    return response.text
