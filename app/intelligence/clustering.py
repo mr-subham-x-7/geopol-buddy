@@ -2,6 +2,7 @@ class EventCluster:
     """Groups related geopolitical news."""
 
     KEYWORDS = [
+        # Countries / Regions
         "china",
         "taiwan",
         "india",
@@ -13,11 +14,10 @@ class EventCluster:
         "america",
         "israel",
         "iran",
-        "thailand",
-        "indonesia",
-        "vietnam",
-        "nato",
         "japan",
+        "thailand",
+        "vietnam",
+        "indonesia",
         "north korea",
         "south korea",
         "philippines",
@@ -28,8 +28,36 @@ class EventCluster:
         "sri lanka",
         "afghanistan",
         "yemen",
-        "eu",
+
+        # Organizations
+        "nato",
         "un",
+        "eu",
+
+        # Event types
+        "earthquake",
+        "missile",
+        "war",
+        "strike",
+        "attack",
+        "military",
+        "defence",
+        "navy",
+        "army",
+        "air force",
+        "drone",
+        "cyber",
+        "tariff",
+        "trade",
+        "sanction",
+        "economy",
+        "rocket",
+        "satellite",
+        "space",
+        "currency",
+        "investment",
+        "finance",
+        "typhoon",
     ]
 
     def cluster(self, articles):
@@ -42,7 +70,7 @@ class EventCluster:
 
             for keyword in self.KEYWORDS:
                 if keyword in title:
-                    key = keyword
+                    key = keyword.title()
                     break
 
             groups.setdefault(key, []).append(article)
